@@ -10,25 +10,12 @@ import (
 	"time"
 )
 
-type zulipSendTextContent struct {
-	Msgtype string `json:"msgtype"`
-	Text    struct {
-		Content             string   `json:"content"`
-		MentionedList       []string `json:"mentioned_list"`
-		MentionedMobileList []string `json:"mentioned_mobile_list"`
-	} `json:"text"`
-}
-
 func SendMd(token string, content string) error {
 	bot := gzb.Bot{}
 	bot.APIKey = token
 	bot.APIURL = "https://zulip.v2chengdu.club/api/v1/"
 	bot.Email = "smart-bot@zulip.v2chengdu.club"
 	bot.Backoff = 2 * time.Second
-	//err := bot.GetConfigFromFlags()
-	//if err != nil {
-	//	log.Fatalln(err)
-	//}
 	bot.Init()
 	m := gzb.Message{
 		Stream:  "LeetCode",

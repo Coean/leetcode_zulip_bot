@@ -28,24 +28,21 @@ import (
 	"context"
 	"flag"
 	"fmt"
+	"github.com/cloud-org/msgpush"
 	"leetcode-question-today/api"
 	"log"
 	"os"
 	"strings"
-
-	"github.com/cloud-org/msgpush"
 )
 
 var (
 	slack string // slack 通知链接
-	wecom string // wecom 通知链接
 	zulip string
 	help  bool // 帮助
 )
 
 func init() {
 	flag.StringVar(&slack, "slack", "", "slack webhook url")
-	flag.StringVar(&wecom, "wecom", "", "wecom webhook token")
 	flag.StringVar(&zulip, "zulip", "", "zulip")
 	flag.BoolVar(&help, "h", false, "帮助")
 	flag.Usage = usage
@@ -76,12 +73,12 @@ func main() {
 	today := resp.TodayRecord
 
 	msgTemplate := `Daily Challenge(%s)
-Title: %s
-Difficulty: %s
-AcRate: %f%%
-Tags: %s
-Link: %s
-LinkCN: %s`
+			Title: %s
+			Difficulty: %s
+			AcRate: %f%%
+			Tags: %s
+			Link: %s
+			LinkCN: %s`
 	date := today.Date
 	difficulty := today.Question.Difficulty
 	acRate := today.Question.AcRate
@@ -101,11 +98,6 @@ LinkCN: %s`
 	if slack != "" {
 		s := msgpush.NewSlack(slack)
 		_ = s.Send(content)
-	}
-
-	if wecom != "" {
-		w := msgpush.NewWeCom(wecom)
-		_ = w.SendText(content)
 	}
 
 	if zulip != "" {
