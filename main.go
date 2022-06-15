@@ -39,12 +39,14 @@ import (
 var (
 	slack string // slack 通知链接
 	wecom string // wecom 通知链接
-	help  bool   // 帮助
+	zulip string
+	help  bool // 帮助
 )
 
 func init() {
 	flag.StringVar(&slack, "slack", "", "slack webhook url")
 	flag.StringVar(&wecom, "wecom", "", "wecom webhook token")
+	flag.StringVar(&zulip, "zulip", "", "zulip")
 	flag.BoolVar(&help, "h", false, "帮助")
 	flag.Usage = usage
 }
@@ -71,31 +73,28 @@ func main() {
 		return
 	}
 
-	if len(resp.TodayRecord) <= 0 {
-		log.Printf("todayRecord 长度为 0,请检查\n")
-		return
-	}
+	today := resp.TodayRecord
 
-	today := resp.TodayRecord[0]
-
-	msgTemplate := `每日一题(%s)
+	msgTemplate := `Daily Challenge(%s)
 Title: %s
 Difficulty: %s
+AcRate: %f%%
 Tags: %s
 Link: %s
 LinkCN: %s`
 	date := today.Date
 	difficulty := today.Question.Difficulty
-	title := fmt.Sprintf("%s(%s)", today.Question.TitleCn, today.Question.Title)
+	acRate := today.Question.AcRate
+	title := fmt.Sprintf("%s(%s)", today.Question.Title, today.Question.Title)
 	tags := make([]string, 0)
 	for _, tag := range today.Question.TopicTags {
-		tags = append(tags, fmt.Sprintf("%s(%s)", tag.NameTranslated, tag.Name))
+		tags = append(tags, fmt.Sprintf("%s", tag.Name))
 	}
-	tagsValue := strings.Join(tags, "、")
+	tagsValue := strings.Join(tags, ", ")
 	link := fmt.Sprintf("%s/problems/%s", api.Leetcode, today.Question.TitleSlug)
 	linkCn := fmt.Sprintf("%s/problems/%s", api.LeetcodeCn, today.Question.TitleSlug)
 
-	content := fmt.Sprintf(msgTemplate, date, title, difficulty, tagsValue, link, linkCn)
+	content := fmt.Sprintf(msgTemplate, date, title, difficulty, acRate, tagsValue, link, linkCn)
 
 	log.Println(content)
 
@@ -107,6 +106,10 @@ LinkCN: %s`
 	if wecom != "" {
 		w := msgpush.NewWeCom(wecom)
 		_ = w.SendText(content)
+	}
+
+	if zulip != "" {
+		api.SendMd(zulip, content)
 	}
 
 	return

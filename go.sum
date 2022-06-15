@@ -1,5 +1,7 @@
 github.com/cloud-org/msgpush v0.0.3 h1:qjhw3xDZPRUn0lq4DTHGhqOeRXzTCUfAHd52jpmPoog=
 github.com/cloud-org/msgpush v0.0.3/go.mod h1:xgnxaaCi0uTjY5APsG5V/uCKD+lXJ/q8UpR+rz9AbjA=
+github.com/ifo/gozulipbot v0.0.1 h1:hYcUViKBe1ZIXk+WRNOe2dEFGi6H8G1cr25HsEnN9Xw=
+github.com/ifo/gozulipbot v0.0.1/go.mod h1:KBDdzKbjflzh+LBaYauJmuDCwwXfFLI6j3eSENlScE0=
 github.com/imroc/req v0.3.2 h1:M/JkeU6RPmX+WYvT2vaaOL0K+q8ufL5LxwvJc4xeB4o=
 github.com/imroc/req v0.3.2/go.mod h1:F+NZ+2EFSo6EFXdeIbpfE9hcC233id70kf0byW97Caw=
 github.com/machinebox/graphql v0.2.2 h1:dWKpJligYKhYKO5A2gvNhkJdQMNZeChZYyBbrZkBZfo=
