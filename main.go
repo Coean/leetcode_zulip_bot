@@ -82,7 +82,7 @@ func main() {
 	date := today.Date
 	difficulty := today.Question.Difficulty
 	acRate := today.Question.AcRate
-	title := fmt.Sprintf("%s(%s)", today.Question.Title, today.Question.Title)
+	title := today.Question.Title
 	tags := make([]string, 0)
 	for _, tag := range today.Question.TopicTags {
 		tags = append(tags, fmt.Sprintf("%s", tag.Name))
