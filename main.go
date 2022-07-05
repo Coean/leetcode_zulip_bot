@@ -76,22 +76,16 @@ func main() {
 			Title: %s
 			Difficulty: %s
 			AcRate: %f%%
-			Tags: %s
 			Link: %s
 			LinkCN: %s`
 	date := today.Date
 	difficulty := today.Question.Difficulty
 	acRate := today.Question.AcRate
 	title := today.Question.Title
-	tags := make([]string, 0)
-	for _, tag := range today.Question.TopicTags {
-		tags = append(tags, fmt.Sprintf("%s", tag.Name))
-	}
-	tagsValue := strings.Join(tags, ", ")
 	link := fmt.Sprintf("%s/problems/%s", api.Leetcode, today.Question.TitleSlug)
 	linkCn := fmt.Sprintf("%s/problems/%s", api.LeetcodeCn, today.Question.TitleSlug)
 
-	content := fmt.Sprintf(msgTemplate, date, title, difficulty, acRate, tagsValue, link, linkCn)
+	content := fmt.Sprintf(msgTemplate, date, title, difficulty, acRate, link, linkCn)
 
 	log.Println(content)
 
