@@ -69,17 +69,17 @@ func main() {
 		return
 	}
 
-	today := resp.TodayRecord
+	today := resp.TodayRecord[0]
 
-	msgTemplate := `Daily Challenge(%s)
+	msgTemplate := `Daily Challenge(CN)(%s)
 			Title: %s
 			Difficulty: %s
-			AcRate: %f%%
+			AcRate: %.2f%%
 			Link: %s
 			LinkCN: %s`
 	date := today.Date
 	difficulty := today.Question.Difficulty
-	acRate := today.Question.AcRate
+	acRate := today.Question.AcRate * 100
 	title := today.Question.Title
 	link := fmt.Sprintf("%s/problems/%s", api.Leetcode, today.Question.TitleSlug)
 	linkCn := fmt.Sprintf("%s/problems/%s", api.LeetcodeCn, today.Question.TitleSlug)

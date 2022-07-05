@@ -32,7 +32,7 @@ const (
 // QuestionQuery graphql query
 const QuestionQuery = `
 	query questionOfToday {
-    activeDailyCodingChallengeQuestion {
+    todayRecord  {
         date
         question {
             acRate
@@ -50,17 +50,17 @@ const QuestionQuery = `
 
 // QuestionTodayResp 注意与官网直接 restful api 请求返回的少一个 data 字段嵌套
 type QuestionTodayResp struct {
-	TodayRecord struct {
+	TodayRecord []struct {
 		Date     string `json:"date"`
 		Question struct {
-			AcRate     float64 `json:"acRate"`
 			Difficulty string  `json:"difficulty"`
 			Title      string  `json:"title"`
 			TitleSlug  string  `json:"titleSlug"`
+			AcRate     float64 `json:"acRate"`
 			TopicTags  []struct {
 				Name string `json:"name"`
 				ID   string `json:"id"`
 			} `json:"topicTags"`
 		} `json:"question"`
-	} `json:"activeDailyCodingChallengeQuestion"`
+	} `json:"todayRecord"`
 }
